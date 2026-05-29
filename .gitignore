@@ -1,0 +1,15 @@
+/node_modules
+/dist
+/build
+.DS_Store
+.env
+.vscode
+# Ignore log files and databases
+*.log
+*.sql
+*.sqlite
+# Ignore npm debug files
+npm-debug.log*
+# Ignore yarn debug files
+yarn-debug.log*
+yarn-error.log*

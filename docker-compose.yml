@@ -1,0 +1,40 @@
+version: "3.8"
+services:
+  redis:
+    image: redis:latest
+    container_name: nitens-redis
+    ports:
+      - "6379:6379"
+    command: ["redis-server", "--appendOnly", "yes"] 
+
+  # its starts  redis container documents with the command redis-server 
+  # and the --appendOnly yes flag is used to enable Redis's append-only 
+  # file (AOF) persistence mode, which allows Redis to save data to disk
+  # so that it can be recovered in case of a restart or failure.
+    volumes: 
+      - redis-data:/data
+    # this means create a volume named redis-data and mount it to the 
+    # /data directory inside the container, 
+    # which is where Redis stores its data by default.
+    #  This allows the data to persist 
+    # even if the container is stopped or removed.
+  mongo:
+    image: mongo:latest
+    container_name: nitens-mongo
+    ports:
+      - "27017:27017"
+    # this means link my mongo container port 27017 to my
+    #  local machine port 27017, so I can access mongo from my 
+    # local machine using localhost:27017
+    environment:
+       MONGO_INITDB_DATABASE: chai_aur_redis
+    volumes:
+      - mongo-data:/data/db
+      # this means create a volume named mongo-data and mount it to the
+      # /data/db directory inside the container, which is where MongoDB
+      # stores its data by default. This allows the data to persist even if 
+      # the container is stopped or removed
+volumes:
+  redis-data:
+  mongo-data:
+# this means create a volume named redis-data and mongo-data,
